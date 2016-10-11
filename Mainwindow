@@ -1,0 +1,81 @@
+Imports System.Text.RegularExpressions
+
+Public Class MainWindow
+    Dim transactions As New Dictionary(Of Integer, Integer)
+
+    Public listBox As ListBox
+    Public Shared number As String
+    Public Shared amount As String
+    Public Shared selectedPromo As String
+
+    Sub Window_Loaded()
+
+        dateTime.Text = System.DateTime.Now.ToString("MM/dd/yyyy h:mm tt")
+        For Each network As String In DatabaseFunctions.GetAllNetwork()
+            simNetworkComboBox1.Items.Add(network)
+        Next network
+
+    End Sub
+
+    Sub loadBtn_Click(sender As Object, e As RoutedEventArgs) Handles loadBtn.Click
+
+        number = simNumber1.Text
+        amount = loadAmount.Text
+
+        Dim loadMsg As New loadMsg()
+        loadMsg.number = number
+        If Not String.IsNullOrEmpty(amount) Then
+            loadMsg.amount = amount
+        End If
+
+        loadMsg.promoSelect = promoCode.Text
+
+        Dim loadmsg1 As New loadMsg
+        loadmsg1.Show()
+    End Sub
+
+    Sub simNetworkComboBox1_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles simNetworkComboBox1.SelectionChanged
+
+        promoCode.Clear()
+        promoDescription.Clear()
+        promoAmount.Clear()
+        promo.Items.Clear()
+        promoList.Items.Clear()
+
+        For Each promoType As String In DatabaseFunctions.GetAllPromoTypesByNetwork(simNetworkComboBox1.SelectedItem)
+            promo.Items.Add(promoType)
+        Next promoType
+
+    End Sub
+    Sub promo_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles promo.SelectionChanged
+
+        promoCode.Clear()
+        promoDescription.Clear()
+        promoAmount.Clear()
+        promoList.Items.Clear()
+
+        For Each promoItem As Promo In DatabaseFunctions.GetAllPromosByNetworkAndType(simNetworkComboBox1.SelectedItem, promo.SelectedItem)
+            promoList.Items.Add(promoItem.PromoCode)
+        Next
+
+    End Sub
+
+    Sub promoList_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles promoList.SelectionChanged
+
+        promoCode.Clear()
+        promoDescription.Clear()
+        promoAmount.Clear()
+
+        If Not String.IsNullOrEmpty(promoList.SelectedItem) Then
+            Dim promoItem As Promo = DatabaseFunctions.GetPromoByNetworkTypeAndCode(simNetworkComboBox1.SelectedItem, promo.SelectedItem, promoList.SelectedItem)
+
+            promoCode.Text = promoItem.PromoCode
+            promoAmount.Text = promoItem.PromoPrice
+            promoDescription.Text = Regex.Unescape(promoItem.PromoDescription)
+
+            selectedPromo = promoList.SelectedItem
+        End If
+
+    End Sub
+
+End Class
