@@ -1,0 +1,39 @@
+<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Project"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="501.5" Width="582.949"
+        Loaded="Window_Loaded">
+    <Grid Margin="0,0,2,1">
+        <ComboBox x:Name="simNetworkComboBox1" HorizontalAlignment="Left" Height="30" Margin="20,65,0,0" VerticalAlignment="Top" Width="125" FontFamily="Century Gothic" FontSize="14"/>
+        <Label x:Name="label1" Content="Mobile Network:" HorizontalAlignment="Left" Height="30" Margin="15,38,0,0" VerticalAlignment="Top" Width="130" FontSize="14" FontFamily="Century Gothic"/>
+        <Label x:Name="label2" Content="Mobile Number:" HorizontalAlignment="Left" Height="30" Margin="150,38,0,0" VerticalAlignment="Top" Width="130" FontFamily="Century Gothic" FontSize="14"/>
+        <TextBox x:Name="simNumber1" HorizontalAlignment="Left" Height="30" Margin="155,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" FontSize="14" FontFamily="Century Gothic" MaxLength="11"/>
+        <Label x:Name="label3" Content="Load Payment:" HorizontalAlignment="Left" Height="30" Margin="284,38,0,0" VerticalAlignment="Top" Width="130" FontFamily="Century Gothic" FontSize="14"/>
+        <TextBox x:Name="loadAmount" HorizontalAlignment="Left" Height="30" Margin="289,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" FontFamily="Century Gothic" FontSize="14"/>
+        <TextBlock x:Name="dateTime" HorizontalAlignment="Left" Height="26" Margin="404,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="143" FontFamily="Century Gothic" FontSize="14" FontWeight="Bold"><Run FontSize="14"/><LineBreak FontSize="14"/><Run FontSize="14"/></TextBlock>
+        <Button x:Name="loadBtn" Content="Load" Height="30" Margin="422,411,27.8,0" VerticalAlignment="Top" FontFamily="Century Gothic" FontSize="14" FontWeight="Bold"/>
+        <ComboBox x:Name="promo" HorizontalAlignment="Left" Height="30" Margin="78,111,0,0" VerticalAlignment="Top" Width="202" FontFamily="Century Gothic" FontSize="14"/>
+        <Label x:Name="label6" Content="Promo:" HorizontalAlignment="Left" Height="30" Margin="15,111,0,0" VerticalAlignment="Top" Width="63" FontSize="14" FontFamily="Century Gothic"/>
+        <ListBox x:Name="promoList" HorizontalAlignment="Left" Height="199" Margin="20,186,0,0" VerticalAlignment="Top" Width="176" FontFamily="Century Gothic" FontSize="14"/>
+        <Label x:Name="label7" Content="Promo List:" HorizontalAlignment="Left" Height="30" Margin="15,151,0,0" VerticalAlignment="Top" Width="100" FontSize="14" FontFamily="Century Gothic"/>
+        <Label x:Name="label8" Content="Promo Code:" HorizontalAlignment="Left" Height="30" Margin="213,151,0,0" VerticalAlignment="Top" Width="160" FontSize="14" FontFamily="Century Gothic"/>
+        <TextBox x:Name="promoCode" HorizontalAlignment="Left" Height="34" Margin="219,186,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195" FontSize="14" FontFamily="Century Gothic"/>
+        <Label x:Name="label9" Content="Description:" HorizontalAlignment="Left" Height="30" Margin="213,225,0,0" VerticalAlignment="Top" Width="154" FontSize="14" FontFamily="Century Gothic"/>
+        <TextBox x:Name="promoDescription" Height="130" Margin="219,255,27.8,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="0.529,0.794" FontFamily="Century Gothic">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="0.391"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="0.786"/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Label x:Name="amountLabel" Content="Price:" HorizontalAlignment="Left" Height="30" Margin="417,151,-4,0" VerticalAlignment="Top" Width="160" FontSize="14" FontFamily="Century Gothic"/>
+        <TextBox x:Name="promoAmount" Height="34" Margin="422,186,27.8,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" FontFamily="Century Gothic"/>
+    </Grid>
+</Window>
