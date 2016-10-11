@@ -1,0 +1,78 @@
+Imports System.Data
+Imports System.Data.SQLite
+
+Public Class DatabaseFunctions
+    Public Shared Function GetDataTable(ByVal sql As String) As DataTable
+        Dim dt As New DataTable()
+        Try
+            Dim conn As New SQLiteConnection("Data Source=C:\Users\Krizzia\Documents\Visual Studio 2015\Projects\Project2\promosdb.s3db")
+            conn.Open()
+            Dim cmd As New SQLiteCommand(conn)
+            cmd.CommandText = sql
+            Dim reader As SQLiteDataReader = cmd.ExecuteReader()
+            dt.Load(reader)
+            reader.Close()
+            conn.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical)
+        End Try
+        Return dt
+    End Function
+
+    Public Shared Function GetAllPromos() As List(Of Promo)
+        Dim promos As New List(Of Promo)
+        Dim dt As DataTable = GetDataTable("select * from promo_list")
+        Dim promo As Promo
+        For Each row As DataRow In dt.Rows
+            promo = New Promo()
+            promo.Network = row.Item("network")
+            promo.PromoType = row.Item("promo_type")
+            promo.PromoCode = row.Item("promo_code")
+            promo.PromoPrice = row.Item("promo_price")
+            promo.PromoDescription = row.Item("promo_description")
+            promos.Add(promo)
+        Next row
+        Return promos
+    End Function
+
+
+    Public Shared Function GetAllNetwork() As List(Of String)
+        Dim networks As New List(Of String)
+        For Each promo As Promo In GetAllPromos()
+            If Not networks.Contains(promo.Network, StringComparer.OrdinalIgnoreCase) Then
+                networks.Add(promo.Network)
+            End If
+        Next promo
+        Return networks
+    End Function
+
+    Public Shared Function GetAllPromoTypesByNetwork(ByVal network As String) As List(Of String)
+        Dim promoTypes As New List(Of String)
+        For Each promo As Promo In GetAllPromos()
+            If promo.Network.Equals(network, StringComparison.OrdinalIgnoreCase) And Not promoTypes.Contains(promo.PromoType, StringComparer.OrdinalIgnoreCase) Then
+                promoTypes.Add(promo.PromoType)
+            End If
+        Next promo
+        Return promoTypes
+    End Function
+
+    Public Shared Function GetAllPromosByNetworkAndType(ByVal network As String, ByVal promoType As String) As List(Of Promo)
+        Dim promosByNetworkAndType As New List(Of Promo)
+        For Each promo As Promo In GetAllPromos()
+            If promo.Network.Equals(network, StringComparison.OrdinalIgnoreCase) And promo.PromoType.Equals(promoType, StringComparison.OrdinalIgnoreCase) Then
+                promosByNetworkAndType.Add(promo)
+            End If
+        Next promo
+        Return promosByNetworkAndType
+    End Function
+
+    Public Shared Function GetPromoByNetworkTypeAndCode(ByVal network As String, ByVal promoType As String, ByVal promoCode As String) As Promo
+        For Each promo As Promo In GetAllPromosByNetworkAndType(network, promoType)
+            If promo.PromoCode.Equals(promoCode, StringComparison.OrdinalIgnoreCase) Then
+                Return promo
+            End If
+        Next promo
+        Return Nothing
+    End Function
+
+End Class
